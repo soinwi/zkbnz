@@ -1,0 +1,10 @@
+#summary Erklärt die Funktionen und das Verhalten des Programms
+
+=Verwendung/ Anwendungsverhalten=
+
+Nach dem Start des Programms wird überprüft, ob bereits ein gültiges/aktuelles nachtschwärmer-SMS im Posteingang ist.
+Wenn dies der Fall ist wird das SMS unter dem (nun ausgegrauten) Button eingeblendet.
+
+Ist kein aktuelles SMS vorhanden, kann mit einem Klick auf den Button eine SMS gesendet werden. (Beinhaltet 'ZKBNZ' und wird an 988 geschickt)
+
+Es entstehen die normalen Kosten wie wenn das SMS auf herkömmliche Weise versendet wird.

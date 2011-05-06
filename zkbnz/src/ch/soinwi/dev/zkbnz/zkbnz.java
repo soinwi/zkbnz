@@ -30,7 +30,11 @@ public class zkbnz extends Activity implements OnClickListener {
         	sender.setText("Kein gültiger Tag, trotzdem senden?");
         }
         
-        
+        if(c.oldSmsValid() )
+        {
+        	TextView text = (TextView)findViewById(R.id.messagetext);
+        	text.setText(c.getLastText() );
+        }
     }
 
     public checkSms getChecker()
@@ -46,7 +50,7 @@ public class zkbnz extends Activity implements OnClickListener {
 			
 		if(! c.attemptSend() )
 		{
-			Toast t = Toast.makeText(v.getContext(), "already valid sms available...", Toast.LENGTH_LONG);
+			Toast t = Toast.makeText(v.getContext(), "Es ist bereits ein gültiges Ticket vorhanden", Toast.LENGTH_LONG);
 			t.show();
 			
 			TextView text = (TextView)findViewById(R.id.messagetext);

@@ -85,7 +85,7 @@ public class checkSms {
 		
 	}
 	
-	private boolean oldSmsValid()
+	public boolean oldSmsValid()
 	{
 		Pattern matcherPattern = Pattern.compile(".*Bis.*(\\d\\d).(\\d\\d).(\\d\\d)\\s(\\d\\d):(\\d\\d)");
 		if(lastSmsBody==null)

@@ -62,6 +62,8 @@ public class zkbnz extends Activity implements OnClickListener {
 			TextView text = (TextView)findViewById(R.id.messagetext);
 			text.setText("" );
 			caller.setText("SMS gesendet");
+			
+			this.finish();
 		}
 	}
 

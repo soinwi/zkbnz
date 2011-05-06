@@ -54,11 +54,12 @@ public class checkSms {
 		
 		if(! oldSmsValid())
 		{
-			Toast t = Toast.makeText(a, "send sms", Toast.LENGTH_LONG);
-			t.show();
 			
 			smsSender s = new smsSender();
 			s.send_sms("ZKBNZ","988");
+			
+			Toast t = Toast.makeText(a, "Sms gesendet", Toast.LENGTH_LONG);
+			t.show();
 			
 			return true;
 		}
@@ -85,7 +86,7 @@ public class checkSms {
 		
 	}
 	
-	public boolean oldSmsValid()
+	public	 boolean oldSmsValid()
 	{
 		Pattern matcherPattern = Pattern.compile(".*Bis.*(\\d\\d).(\\d\\d).(\\d\\d)\\s(\\d\\d):(\\d\\d)");
 		if(lastSmsBody==null)

@@ -42,6 +42,7 @@ public class zkbnz extends Activity implements OnClickListener {
     	super.onPause();
     	
     	this.finish();			//quit it to ensure that each time it is displayed it refetches the messages
+    	
     }
 
     public checkSms getChecker()
@@ -70,7 +71,7 @@ public class zkbnz extends Activity implements OnClickListener {
 			text.setText("" );
 			caller.setText("SMS gesendet");
 			
-			this.finish();							//and finisch activity
+			this.finish();							//and finish activity
 		}
 	}
 

@@ -4,7 +4,7 @@ import android.telephony.SmsManager;
 
 public class smsSender {
 	
-	public void send_sms(String content, String phone_nr)
+	public void send_sms(String content, String phone_nr)		//sends sms with given content/receiver
 	{
 		SmsManager smsman = SmsManager.getDefault();
 		

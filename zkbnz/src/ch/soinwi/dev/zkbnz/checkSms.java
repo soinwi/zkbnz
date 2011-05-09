@@ -1,5 +1,7 @@
 package ch.soinwi.dev.zkbnz;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import java.text.DateFormat;
@@ -21,11 +23,14 @@ public class checkSms {
 	private String lastSmsBody = null;								//contains last sms's body from given number
 	private Calendar lastValidUntil = Calendar.getInstance();		//calendar containt valid until date from last sms if available
 	private Activity a;												//activity to set as parent
+	private String msgText, phoneNr;
 	
 	
-	public checkSms(Activity a)
+	public checkSms(Activity a, String msgText, String phoneNr)
 	{
 		this.a = a;		//set a to activity
+		this.msgText = msgText;
+		this.phoneNr = phoneNr;
 		
 		
 		//Query the content provider for Sms from 988, get date and body
@@ -36,18 +41,34 @@ public class checkSms {
 	public void loadContent()
 	{
 		Uri inboxSmsUri = Uri.parse("content://sms/inbox");
-		String[] columns = {"body","date"};
-		Cursor inboxCursor = a.getContentResolver().query(inboxSmsUri, columns, "address = '988'",null, "date DESC");
+		String[] columns = {"body","date","read","_id"};
+		Cursor inboxCursor = a.getContentResolver().query(inboxSmsUri, columns, "address = '"+ phoneNr + "'",null, "date DESC");
 		
 		if(inboxCursor.moveToFirst() ) //get first element (the newest one)
 		{
 			
 			int dateCol = inboxCursor.getColumnIndex("date");
 			int bodyCol = inboxCursor.getColumnIndex("body");
-			
+			int readCol = inboxCursor.getColumnIndex("read");
+			int idCol = inboxCursor.getColumnIndex("_id");
 
 			String smsBody = inboxCursor.getString(bodyCol);
 			long longDate	= inboxCursor.getLong(dateCol);
+			int read = inboxCursor.getInt(readCol);
+			int id = inboxCursor.getInt(idCol);
+			
+			if(read==0)			//set sms to read
+			{
+				ContentValues values = new ContentValues();
+				values.put("read", "1");
+				
+				//a.getContentResolver().insert(Uri.withAppendedPath(inboxSmsUri, Integer.toString(id) ),values);
+				int numbers = a.getContentResolver().update(Uri.withAppendedPath(inboxSmsUri, Integer.toString(id) ), values, null, null);
+				//Toast.makeText(a, Integer.toString(numbers), Toast.LENGTH_LONG).show();
+				//Toast.makeText(a, Integer.toString(id), Toast.LENGTH_LONG).show();
+			}
+			
+			
 			
 			lastSmsDate = new Date(longDate);
 			lastSmsBody = new String(smsBody);

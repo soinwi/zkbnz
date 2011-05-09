@@ -39,7 +39,7 @@ public class zkbnz extends Activity implements OnClickListener {
         
         //SharedPreferences settings = getSharedPreferences("zkbnz_settings",0); 
 
-        c = new checkSms(this);
+        c = new checkSms(this, getMsgText(), getMsgNr() );
         checkFirstStart();
         
         Button sender = (Button)findViewById(R.id.hellobutton);		//enable events on button        
@@ -101,6 +101,25 @@ public class zkbnz extends Activity implements OnClickListener {
     	return c;
     }
     
+    private String getMsgText()
+    {
+    	SharedPreferences settings = getSharedPreferences("zkbnz_settings",0); 
+		String message_text = settings.getString("provider", "zkbnz");
+		return message_text;
+    }
+    
+    private String getMsgNr()
+    {
+    	String text = getMsgText();
+    	if(text.equals("zkbnz") || text.equals("zvvnz") )
+    	{
+    		return "988";
+
+    	}
+
+    	return "988";
+    }
+    
     public void onClick(View v)
 	{
 		
@@ -108,10 +127,9 @@ public class zkbnz extends Activity implements OnClickListener {
     	c.loadContent();
 		Button caller = (Button)v;
 		
-		SharedPreferences settings = getSharedPreferences("zkbnz_settings",0); 
-		String message_text = settings.getString("provider", "zkbnz");
+		
 			
-		if(! c.attemptSend(message_text, "988") )			//if sending-attempt returns false, that means ther was no sms sent because there is already an existing ticket
+		if(! c.attemptSend(getMsgText() , getMsgNr() ) )			//if sending-attempt returns false, that means ther was no sms sent because there is already an existing ticket
 		{
 			Toast t = Toast.makeText(v.getContext(), "Es ist bereits ein gültiges Ticket vorhanden", Toast.LENGTH_LONG);		//inform user about that
 			t.show();
@@ -125,6 +143,8 @@ public class zkbnz extends Activity implements OnClickListener {
 			TextView text = (TextView)findViewById(R.id.messagetext);		//otherwise change button text
 			text.setText("" );
 			caller.setText("SMS gesendet");
+			
+			Toast.makeText(this, "SMS gesendet", Toast.LENGTH_LONG);
 			
 			this.finish();							//and finish activity
 		}

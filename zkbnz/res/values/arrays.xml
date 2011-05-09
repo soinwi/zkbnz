@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="providerKeys">
+		<item>ZKB nachtschwärmer</item>
+		<item>Regulär</item>
+	</string-array>
+	<string-array name="providerValues">
+		<item>zkbnz</item>
+		<item>zvvnz</item>
+	</string-array>
+</resources>

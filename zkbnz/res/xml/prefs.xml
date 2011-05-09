@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:title="Einstellungen">
+	
+	<ListPreference
+	android:key="choose"
+	android:title="Dienst"
+	android:entries="@array/providerKeys"
+	android:entryValues="@array/providerValues"
+	>
+	
+	</ListPreference>
+	
+
+	</PreferenceScreen>

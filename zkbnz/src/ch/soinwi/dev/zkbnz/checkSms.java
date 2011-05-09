@@ -29,6 +29,12 @@ public class checkSms {
 		
 		
 		//Query the content provider for Sms from 988, get date and body
+		loadContent();
+	}
+
+	
+	public void loadContent()
+	{
 		Uri inboxSmsUri = Uri.parse("content://sms/inbox");
 		String[] columns = {"body","date"};
 		Cursor inboxCursor = a.getContentResolver().query(inboxSmsUri, columns, "address = '988'",null, "date DESC");
@@ -45,12 +51,12 @@ public class checkSms {
 			
 			lastSmsDate = new Date(longDate);
 			lastSmsBody = new String(smsBody);
-			
+
 			
 		}
 	}
 	
-	public boolean attemptSend()		//check if should send sms
+	public boolean attemptSend(String msgText, String phoneNr)		//check if should send sms
 	{
 		
 		
@@ -58,10 +64,8 @@ public class checkSms {
 		{
 			
 			smsSender s = new smsSender();
-			s.send_sms("ZKBNZ","988");
-			
-			Toast t = Toast.makeText(a, "Sms gesendet", Toast.LENGTH_LONG);
-			t.show();
+			//s.send_sms("ZKBNZ","988");
+			s.send_sms(msgText, phoneNr);
 			
 			return true;
 		}

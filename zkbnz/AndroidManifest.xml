@@ -22,6 +22,10 @@
               android:configChanges="keyboard|keyboardHidden|orientation">
               
               	</activity>
+        <activity android:name=".settings">
+        
+        
+        </activity>
 
     </application>
     

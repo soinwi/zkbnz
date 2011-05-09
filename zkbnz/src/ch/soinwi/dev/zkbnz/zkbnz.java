@@ -8,9 +8,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.text.Layout;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -25,19 +29,40 @@ public class zkbnz extends Activity implements OnClickListener {
     /** Called when the activity is first created. */
    
 	static final int FIRST_START_DIAG = 0;
-    private checkSms c = null;
+	static final int ABOUT_DIAG = 1;
+    private checkSms c = null;//new checkSms(this);
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        //SharedPreferences settings = getSharedPreferences("zkbnz_settings",0); 
+
+        c = new checkSms(this);
         checkFirstStart();
         
         Button sender = (Button)findViewById(R.id.hellobutton);		//enable events on button        
         sender.setOnClickListener(this);
         
-        c = new checkSms(this);				//sms checker instance to privide functionality like daychecking
+        //initCheck();
+                
+        
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);
+                
+        AdView adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
+        //adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
+        layout.addView(adv);
+        AdRequest adreq = new AdRequest();
+        adreq.setTesting(true);
+        adv.loadAd(adreq);
+    }
+    
+    private void initCheck()
+    {
+    	//c = new checkSms(this);
+    	c.loadContent();
+    	Button sender = (Button)findViewById(R.id.hellobutton);
         
         if( !c.isValidDay() )				//if it's not a valid day (friday, saturday, sunday morning)
         {
@@ -51,26 +76,26 @@ public class zkbnz extends Activity implements OnClickListener {
         	
         	sender.setEnabled(false);										//and disable button
         }
-        
-        RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);
-                
-        AdView adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
-        //adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
-        layout.addView(adv);
-        AdRequest adreq = new AdRequest();
-        adreq.setTesting(true);
-        adv.loadAd(adreq);
+    	
     }
-    
+   
     @Override
     public void onPause()		//when app gets out of focus
     {
     	super.onPause();
     	
-    	this.finish();			//quit it to ensure that each time it is displayed it refetches the messages
+    	//this.finish();			//quit it to ensure that each time it is displayed it refetches the messages
     	
     }
-
+    
+    @Override
+    public void onResume()
+    {
+    	super.onResume();
+    	initCheck();
+    	
+    }
+    
     public checkSms getChecker()
     {
     	return c;
@@ -79,10 +104,14 @@ public class zkbnz extends Activity implements OnClickListener {
     public void onClick(View v)
 	{
 		
-		c = new checkSms(this);			//sms checker instance
-    	Button caller = (Button)v;
+		//c = new checkSms(this);			//sms checker instance
+    	c.loadContent();
+		Button caller = (Button)v;
+		
+		SharedPreferences settings = getSharedPreferences("zkbnz_settings",0); 
+		String message_text = settings.getString("provider", "zkbnz");
 			
-		if(! c.attemptSend() )			//if sending-attempt returns false, that means ther was no sms sent because there is already an existing ticket
+		if(! c.attemptSend(message_text, "988") )			//if sending-attempt returns false, that means ther was no sms sent because there is already an existing ticket
 		{
 			Toast t = Toast.makeText(v.getContext(), "Es ist bereits ein gültiges Ticket vorhanden", Toast.LENGTH_LONG);		//inform user about that
 			t.show();
@@ -133,7 +162,7 @@ public class zkbnz extends Activity implements OnClickListener {
     	case FIRST_START_DIAG:
     		AlertDialog.Builder builder = new AlertDialog.Builder(this);
     		builder.setTitle("Wichtig. Bitte lesen")
-    			.setMessage("Achtung: Bei Klick auf den Bestellen-Button wird eine SMS gemäss den einstellungen versendet! Dabei fallen die Kosten der beteiligten Dienstleister an! Der Ersteller dieser App übernimmt keinerlei Haftung für entstandene Kosten. \n\nMit einem Klick auf den Bestätigen-Button bestätige ich, dass ich diesen Hinweis gelesen und Verstanden habe! \n\nWeitere informationen finden sie im wiki unter http://code.google.com/p/zkbnz/")
+    			.setMessage("Achtung: Bei Klick auf den Bestellen-Button wird eine SMS gemäss den einstellungen versendet! Dabei fallen die Kosten der beteiligten Dienstleister an! Der Ersteller dieser App übernimmt keinerlei Haftung für entstandene Kosten. \n\nWichtig: Der Entwickler dieses Apps steht in keinerlei Zusammenhang mit der ZKB oder dem ZVV. Dies ist kein offizielles App einer dieser Firmen! \n\nMit einem Klick auf den Bestätigen-Button bestätige ich, dass ich diesen Hinweis gelesen und Verstanden habe! \n\nWeitere informationen finden sie im wiki unter http://code.google.com/p/zkbnz/")
     			.setCancelable(false)
     			.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
     				public void onClick(DialogInterface dialog, int id) {
@@ -147,12 +176,56 @@ public class zkbnz extends Activity implements OnClickListener {
     		diag = (Dialog)alert;
     		break;
     		
+    	case ABOUT_DIAG:
+    		AlertDialog.Builder aboutB = new AlertDialog.Builder(this);
+    		aboutB.setTitle("Über dieses App")
+    		.setMessage("Programmiert von David Sommer, soinwi \ndavid.sommer@gmx.ch info@soinwi.ch \n\nHomepage: www.soinwi.ch")
+    		.setCancelable(false)
+    		.setPositiveButton("OK",new DialogInterface.OnClickListener(){
+    			public void onClick(DialogInterface dialog, int id){
+    				dialog.dismiss();
+    			}
+    		});
+    		AlertDialog about = aboutB.create();
+    		diag = (Dialog)about;
+    		break;
+    		
     	}
     	return diag;
     
     }
     
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.bottommenu, menu);
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	switch(item.getItemId())
+    	{
+    	case R.id.about:
+    		
+    		showDialog(ABOUT_DIAG);
+    		
+    		return true;
+    	case R.id.settings:
+    		
+    		Intent i = new Intent(zkbnz.this, settings.class);
+    		startActivity(i);
+    		
+    		return true;
+    		
+    	default:
+    		return super.onOptionsItemSelected(item);
+    	}
+    	
+    	
+    }
 }
 
 

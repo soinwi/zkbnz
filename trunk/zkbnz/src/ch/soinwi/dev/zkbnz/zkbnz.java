@@ -1,5 +1,7 @@
 package ch.soinwi.dev.zkbnz;
 
+import java.util.Calendar;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -54,6 +56,8 @@ public class zkbnz extends Activity implements OnClickListener {
         //adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
         layout.addView(adv);
         AdRequest adreq = new AdRequest();
+        String bday = (Integer.toString(Calendar.getInstance().get(Calendar.YEAR)-22 ) ) + "0101";
+        adreq.setBirthday(bday);
         adreq.setTesting(true);
         adv.loadAd(adreq);
     }

@@ -5,6 +5,10 @@ import com.google.ads.AdSize;
 import com.google.ads.AdView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 
 import android.text.Layout;
 import android.view.View;
@@ -14,15 +18,21 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.*;
 import android.os.Bundle;
 
+
+
+
 public class zkbnz extends Activity implements OnClickListener {
     /** Called when the activity is first created. */
    
+	static final int FIRST_START_DIAG = 0;
     private checkSms c = null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        checkFirstStart();
         
         Button sender = (Button)findViewById(R.id.hellobutton);		//enable events on button        
         sender.setOnClickListener(this);
@@ -90,6 +100,58 @@ public class zkbnz extends Activity implements OnClickListener {
 			this.finish();							//and finish activity
 		}
 	}
+    
+    private void checkFirstStart()
+    {
+    	SharedPreferences settings = getPreferences(0);
+    	boolean hasBeenStarted = settings.getBoolean("hasBeenStarted", false);
+    	
+    	if(!hasBeenStarted)
+    	{
+    		showDialog(FIRST_START_DIAG);
+    	}
+  
+    }
+    
+    private void setHasBeenStarted()
+    {
+    	SharedPreferences settings = getPreferences(0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	
+    	editor.putBoolean("hasBeenStarted", true);
+    	
+    	editor.commit();
+    }
+
+    
+    @Override
+    protected Dialog onCreateDialog(int id)
+    {
+    	Dialog diag=null;
+    	switch(id)
+    	{
+    	case FIRST_START_DIAG:
+    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    		builder.setTitle("Wichtig. Bitte lesen")
+    			.setMessage("Achtung: Bei Klick auf den Bestellen-Button wird eine SMS gemäss den einstellungen versendet! Dabei fallen die Kosten der beteiligten Dienstleister an! Der Ersteller dieser App übernimmt keinerlei Haftung für entstandene Kosten. \n\nMit einem Klick auf den Bestätigen-Button bestätige ich, dass ich diesen Hinweis gelesen und Verstanden habe! \n\nWeitere informationen finden sie im wiki unter http://code.google.com/p/zkbnz/")
+    			.setCancelable(false)
+    			.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
+    				public void onClick(DialogInterface dialog, int id) {
+    					
+    					setHasBeenStarted();
+    					
+    					dialog.dismiss();
+    	           }
+    			});
+    		AlertDialog alert = builder.create();
+    		diag = (Dialog)alert;
+    		break;
+    		
+    	}
+    	return diag;
+    
+    }
+    
 
 }
 

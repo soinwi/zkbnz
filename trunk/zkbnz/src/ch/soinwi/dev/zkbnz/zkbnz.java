@@ -1,9 +1,16 @@
 package ch.soinwi.dev.zkbnz;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 
+import android.text.Layout;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.*;
 import android.os.Bundle;
 
@@ -34,6 +41,15 @@ public class zkbnz extends Activity implements OnClickListener {
         	
         	sender.setEnabled(false);										//and disable button
         }
+        
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);
+                
+        AdView adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
+        //adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
+        layout.addView(adv);
+        AdRequest adreq = new AdRequest();
+        adreq.setTesting(true);
+        adv.loadAd(adreq);
     }
     
     @Override

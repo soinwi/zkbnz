@@ -17,4 +17,9 @@ Mit einem Klick auf den Hardware-Menuknopf des Handys können Menü-Optionen err
 
 Dienst: ermöglicht, den gewünschten Dienst auszuwählen:
     nachtschwärmer: Für ZKB-Kunden, welche den Nachtzuschlag kostenlos bekommen (bzw für 20Rp.)
+
     Regulär: Für Normalkunden, welche den Zuschlag per SMS lösen möchten und dafür pro SMS CHF 5.- zahlen.
+
+===Über===
+
+Infos zum Entwickler/Homepage

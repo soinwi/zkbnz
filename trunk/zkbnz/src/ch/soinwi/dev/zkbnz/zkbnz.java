@@ -48,18 +48,21 @@ public class zkbnz extends Activity implements OnClickListener {
         sender.setOnClickListener(this);
         
         //initCheck();
-                
         
-        RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);
-                
-        AdView adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
-        //adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
-        layout.addView(adv);
-        AdRequest adreq = new AdRequest();
-        String bday = (Integer.toString(Calendar.getInstance().get(Calendar.YEAR)-22 ) ) + "0101";
-        adreq.setBirthday(bday);
-        adreq.setTesting(true);
-        adv.loadAd(adreq);
+        String appname = getString(R.string.app_name);
+        if(!appname.equals("ZKBNZ adfree") )
+        {
+        	RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);
+
+        	AdView adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
+        	//adv = new AdView(this, AdSize.BANNER, "a14dc55acae2cdd");
+        	layout.addView(adv);
+        	AdRequest adreq = new AdRequest();
+        	String bday = (Integer.toString(Calendar.getInstance().get(Calendar.YEAR)-22 ) ) + "0101";
+        	adreq.setBirthday(bday);
+        	adreq.setTesting(true);
+        	adv.loadAd(adreq);
+        }
     }
     
     private void initCheck()

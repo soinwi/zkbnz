@@ -116,6 +116,8 @@ public class checkSms {
 	public	 boolean oldSmsValid()	//checks if an older sms is still valid
 	{
 		Pattern matcherPattern = Pattern.compile(".*Bis.*(\\d\\d).(\\d\\d).(\\d\\d)\\s(\\d\\d):(\\d\\d)");	//regex pattern
+		//Thx a dere Stell an Michael Weiss wo mir 30s vo sinere Wertvolle ziit gopferet het zum mir die nötig wüssensgrundlag z liefere wie sones sms überhaupt usgseht. ;-)
+		
 		if(lastSmsBody==null)	//if there is no older sms
 		{
 			return false;

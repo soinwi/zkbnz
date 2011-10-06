@@ -49,8 +49,8 @@ public class zkbnz extends Activity implements OnClickListener {
         
         //initCheck();
         
-        String appname = getString(R.string.app_name);
-        if(!appname.equals("ZKBNZ adfree") )
+        String paid = getString(R.string.paid);
+        if(paid.equals("free") )
         {
         	RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);
 

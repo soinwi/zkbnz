@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, zkbnz!</string>
     <string name="app_name">ZKBNZ</string>
+    <string name="paid">free</string>
 </resources>

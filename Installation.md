@@ -1,0 +1,11 @@
+# Anforderungen #
+
+Android-Handy (ab 1.6, getestet bis 2.3.3)
+Eine bereits für nachtschwärmer registrierte Handy-Nr (http://www.zkb.ch/de/startseite/privatkunden/konten_und_zahlungen/bank_und_kreditkarten/zkbnachtschwaermer.html)
+
+# Installation #
+
+Wichtig: Um die App installieren zu können muss unter 'Einstellungen > Anwendungen > Unbekannte Quellen' aktiviert sein!
+
+Unter Downloads die aktuellste Datei herunterladen und aufs Handy kopieren oder per Barcode-Scanner (Android-Market) den 2D-Barcode einscannen und dem darin enthaltenen Link folgen.
+Die heruntergeladene .apk Datei auf em Handy anklicken, sie wird nun installiert.

@@ -1,0 +1,23 @@
+# Verwendung/ Anwendungsverhalten #
+
+Nach dem Start des Programms wird überprüft, ob bereits ein gültiges/aktuelles nachtschwärmer-SMS im Posteingang ist.
+Wenn dies der Fall ist wird das SMS unter dem (nun ausgegrauten) Button eingeblendet.
+
+Ist kein aktuelles SMS vorhanden, kann mit einem Klick auf den Button eine SMS gesendet werden. (Beinhaltet 'ZKBNZ' und wird an 988 geschickt)
+
+Es entstehen die normalen Kosten wie wenn das SMS auf herkömmliche Weise versendet wird.
+
+## Menü ##
+
+Mit einem Klick auf den Hardware-Menuknopf des Handys können Menü-Optionen erreicht werden
+
+### Einstellungen ###
+
+Dienst: ermöglicht, den gewünschten Dienst auszuwählen:
+> nachtschwärmer: Für ZKB-Kunden, welche den Nachtzuschlag kostenlos bekommen (bzw für 20Rp.)
+
+> Regulär: Für Normalkunden, welche den Zuschlag per SMS lösen möchten und dafür pro SMS CHF 5.- zahlen.
+
+### Über ###
+
+Infos zum Entwickler/Homepage
